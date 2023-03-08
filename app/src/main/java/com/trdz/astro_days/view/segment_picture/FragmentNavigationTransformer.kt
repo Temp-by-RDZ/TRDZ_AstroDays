@@ -7,13 +7,13 @@ import com.trdz.astro_days.utility.CONST_MIN_SCALE
 
 class FragmentNavigationTransformer: ViewPager.PageTransformer {
 
+	/** Настройка реакции страниц на перемещение */
 	override fun transformPage(view: View, position: Float) {
 		view.apply {
 			when {
-				position < -1 -> {
-					// This page is way off-screen to the left.
-					alpha = 0f
-				}
+				//Действие когда страница за экраном слева
+				position < -1 -> alpha = 0f
+				//Действие с видимыми страницами
 				position <= 1 -> {
 					// Modify the default slide transition to shrink the page as well
 					val scaleFactor = Math.max(CONST_MIN_SCALE, 1 - Math.abs(position))
@@ -29,10 +29,8 @@ class FragmentNavigationTransformer: ViewPager.PageTransformer {
 					// Fade the page relative to its size.
 					alpha = (CONST_MIN_ALPHA + (((scaleFactor - CONST_MIN_SCALE) / (1 - CONST_MIN_SCALE)) * (1 - CONST_MIN_ALPHA)))
 				}
-				else -> {
-					// This page is way off-screen to the right.
-					alpha = 0f
-				}
+				//Действие когда страница за экраном справа
+				else -> alpha = 0f
 			}
 		}
 	}

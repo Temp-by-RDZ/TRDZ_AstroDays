@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/** Запрос картинки по дате публикаүии с Mars Rover Picture*/
 interface ServerRetrofitMrpCustomApi {
 	@GET(PACKAGE_MRP)
 	fun getResponse(

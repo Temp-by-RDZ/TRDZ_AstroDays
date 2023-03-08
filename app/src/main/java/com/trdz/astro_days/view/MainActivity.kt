@@ -12,15 +12,12 @@ import org.koin.android.ext.android.inject
 
 class MainActivity: AppCompatActivity() {
 
-
 	//region Injected
-
 	private val navigation: Navigation by inject()
 
 	//endregion
 
 	//region Customization
-
 	override fun onBackPressed() {
 		val fragmentList = supportFragmentManager.fragments
 

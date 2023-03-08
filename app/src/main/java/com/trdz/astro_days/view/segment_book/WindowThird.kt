@@ -25,21 +25,22 @@ class WindowThird: Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		buttonBinds()
 		initialize()
 	}
 
 	//endregion
 
 	//region Main functional
+	/** Задание начального исполнения основного функционала*/
+	private fun initialize() {
+		buttonBinds()
+	}
+
 	private fun buttonBinds() {
 	}
 
-	private fun initialize() {
-	}
 
 	//endregion
-
 
 	companion object {
 		fun newInstance() = WindowThird()

@@ -16,6 +16,7 @@ import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 import kotlin.text.StringBuilder
 
+/** Получение данных с Api Earth Pictures */
 class ServerReceiverEPC(): ExternalSource {
 
 	override fun load(date: String?): ServersResult {

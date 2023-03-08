@@ -28,6 +28,7 @@
     <string name="ERROR_DISCRIPTIOn">Missing information.</string>
     <string name="menu_again">Заново</string>
     <string name="Error_code_message">Error code:</string>
+    <string name="error_desc_m3">You don\'t have Api key</string>
     <string name="error_desc_m2">Nasa don\'t post photo for this day</string>
     <string name="error_desc_m1">Internet connection lost or current data available</string>
     <string name="error_desc_200">Connection successful but server data was corrupt</string>

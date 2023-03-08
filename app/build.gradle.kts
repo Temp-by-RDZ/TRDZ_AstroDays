@@ -71,6 +71,10 @@ android {
 		implementation(Deps.RETROFIT_CORE)  //Functional Requests
 		implementation(Deps.RETROFIT_CONV)  //Functional Requests Converter
 		implementation(Deps.RETROFIT_JSON)  //Server Json feature
+		//Extension
+		implementation(Deps.ANDX_VM)        //MVVM ViewModel addon
+		implementation(Deps.ANDX_LD)        //LiveData addon
+		implementation(Deps.ANDX_FRAGMENT)  //Fragment addon
 		//Basis
 		implementation(Deps.ANDX_CORE)
 		implementation(Deps.ANDX_LEGACY)    // Legacy

@@ -10,6 +10,7 @@ import com.trdz.astro_days.model.server_pod.ServerRetrofitPodApi
 import org.koin.java.KoinJavaComponent
 import retrofit2.Response
 
+/** Получение данных с Api Mars Rovers Photos */
 class ServerRetrofitMRP: ExternalSource {
 
 	private val retrofit: ServerRetrofitMrpCustomApi by KoinJavaComponent.inject(ServerRetrofitMrpCustomApi::class.java)

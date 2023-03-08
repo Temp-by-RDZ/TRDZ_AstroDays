@@ -10,7 +10,7 @@ import com.trdz.astro_days.utility.PREFIX_MRP
 import com.trdz.astro_days.utility.PREFIX_POD
 
 class RepositoryExecutor: Repository {
-
+	/** Отправка запроса NASA EpicPicture,MarsRoverPicture,PictureOfTheDay */
 	override fun connection(serverListener: ServerResponse, prefix: String, date: String?) {
 		Log.d("@@@", "Rep - start connection $prefix on date: $date")
 		lateinit var externalSource: ExternalSource

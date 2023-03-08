@@ -6,103 +6,35 @@ import androidx.fragment.app.FragmentTransaction
 import com.trdz.astro_days.R
 import com.trdz.astro_days.utility.*
 
+/** Кастомные комманды для навигаүии */
 class Navigation(private var fastContainer: Int = 0) {
 
+	/** Возврат к нужному окну в памяти */
 	fun returnTo(manager: FragmentManager, toId: Int = 0) {
 		if (manager.backStackEntryCount <= toId) return
 		val entry: FragmentManager.BackStackEntry = manager.getBackStackEntryAt(toId)
 		manager.popBackStackImmediate(entry.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 	}
 
+	/** Добавление нового окна на экран */
 	fun add(manager: FragmentManager, fragment: Fragment?, remember: Boolean = true, container: Int = fastContainer, effect: String = "NONE") {
-		val pos = if (container == -1) fastContainer
-		else container
 		if (manager.isDestroyed) return
 		manager.beginTransaction().apply {
-			when (effect) {
-				EFFECT_RISE -> setCustomAnimations(
-					R.anim.slide_up,
-					R.anim.slide_down,
-				)
-				EFFECT_FADE -> setCustomAnimations(
-					R.anim.fade_in,
-					R.anim.fade_out,
-				)
-				EFFECT_SLIDE -> setCustomAnimations(
-					R.anim.slide_in,
-					R.anim.slide_out,
-				)
-				EFFECT_DROP -> setCustomAnimations(
-					R.anim.move_from_up,
-					R.anim.fade_out,
-				)
-				EFFECT_MOVED -> setCustomAnimations(
-					R.anim.move_from_up,
-					R.anim.slide_down,
-				)
-				EFFECT_MOVEL -> setCustomAnimations(
-					R.anim.slide_in,
-					R.anim.move_to_left,
-				)
-				EFFECT_MOVER -> setCustomAnimations(
-					R.anim.move_from_left,
-					R.anim.slide_out,
-				)
-				EFFECT_MOVEU -> setCustomAnimations(
-					R.anim.slide_up,
-					R.anim.move_to_up,
-				)
-			}
-			add(pos, fragment!!)
+			animate(effect)
+			if (container == -1) add(fastContainer, fragment!!)
+			else add(container, fragment!!)
 			if (remember) addToBackStack("")
 			commit()
 		}
 	}
 
+	/** Замена текущего на другое окно */
 	fun replace(manager: FragmentManager, fragment: Fragment?, remember: Boolean = true, container: Int = fastContainer, effect: String = "NONE") {
-		val pos = if (container == -1) fastContainer
-		else container
 		if (manager.isDestroyed) return
 		manager.beginTransaction().apply {
-			when (effect) {
-				EFFECT_RISE -> setCustomAnimations(
-					R.anim.slide_up,
-					R.anim.slide_down,
-				)
-				EFFECT_FADE -> setCustomAnimations(
-					R.anim.fade_in,
-					R.anim.fade_out,
-				)
-				EFFECT_SLIDE -> setCustomAnimations(
-					R.anim.slide_in,
-					R.anim.slide_out,
-				)
-				EFFECT_DROP -> setCustomAnimations(
-					R.anim.move_from_up,
-					R.anim.fade_out,
-				)
-				EFFECT_SHOW -> setCustomAnimations(
-					R.anim.fade_in,
-					R.anim.move_to_up,
-				)
-				EFFECT_MOVED -> setCustomAnimations(
-					R.anim.move_from_up,
-					R.anim.slide_down,
-				)
-				EFFECT_MOVEL -> setCustomAnimations(
-					R.anim.slide_in,
-					R.anim.move_to_left,
-				)
-				EFFECT_MOVER -> setCustomAnimations(
-					R.anim.move_from_left,
-					R.anim.slide_out,
-				)
-				EFFECT_MOVEU -> setCustomAnimations(
-					R.anim.slide_up,
-					R.anim.move_to_up,
-				)
-			}
-			replace(pos, fragment!!)
+			animate(effect)
+			if (container == -1) replace(fastContainer, fragment!!)
+			else replace(container, fragment!!)
 			setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 			if (remember) addToBackStack("")
 			commit()

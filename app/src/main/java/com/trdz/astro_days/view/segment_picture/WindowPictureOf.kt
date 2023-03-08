@@ -20,14 +20,17 @@ import com.trdz.astro_days.utility.*
 import java.util.*
 import kotlin.concurrent.thread
 import android.graphics.BitmapFactory
+import androidx.fragment.app.viewModels
 import coil.clear
 import coil.load
+import com.trdz.astro_days.BuildConfig
 import com.trdz.astro_days.view.scenes.SceneFlash
 import com.trdz.astro_days.utility.KEY_PREFIX
 import com.trdz.astro_days.utility.PREFIX_EPC
 import com.trdz.astro_days.utility.PREFIX_MRP
 import com.trdz.astro_days.utility.PREFIX_POD
 import com.trdz.astro_days.view.Navigation
+import com.trdz.astro_days.view_model.ViewModelFactories
 import org.koin.android.ext.android.inject
 import java.io.*
 import java.net.HttpURLConnection
@@ -37,27 +40,29 @@ import java.net.URL
 class WindowPictureOf: Fragment() {
 
 	//region Injected
-
 	private val navigation: Navigation by inject()
+	private val factory: ViewModelFactories by inject()
+
+	private val viewModel: MainViewModel by viewModels {
+		factory
+	}
 
 	//endregion
 
 	//region Elements
 	private var _binding: FragmentWindowPofBinding? = null
 	private val binding get() = _binding!!
-	private var _viewModel: MainViewModel? = null
-	private val viewModel get() = _viewModel!!
 	private var _bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>? = null
 	private val bottomSheetBehavior get() = _bottomSheetBehavior!!
 	private lateinit var prefix: String
 	private var url: String? = null
+
 	//endregion
 
 	//region Base realization
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
-		_viewModel = null
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +74,6 @@ class WindowPictureOf: Fragment() {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		_binding = FragmentWindowPofBinding.inflate(inflater, container, false)
-		_viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 		return binding.root
 	}
 
@@ -141,7 +145,8 @@ class WindowPictureOf: Fragment() {
 					append(" ")
 					append(material.code)
 					append("\n")
-					when (material.code) {
+					if (BuildConfig.NASA_API_KEY == "") append(getString(R.string.error_desc_m3))
+					else when (material.code) {
 						-2 -> append(getString(R.string.error_desc_m2))
 						-1 -> append(getString(R.string.error_desc_m1))
 						in 200..299 -> append(getString(R.string.error_desc_200))
@@ -182,7 +187,6 @@ class WindowPictureOf: Fragment() {
 		}
 	}
 
-	//endregion
 	private fun galleryPic(data: String) {
 		Log.d("@@@", "App - Start saving image")
 		val file = getDisc()
@@ -222,6 +226,8 @@ class WindowPictureOf: Fragment() {
 	}
 
 	private fun getDisc()= File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Picture of my Day")
+
+	//endregion
 
 	companion object {
 		@JvmStatic

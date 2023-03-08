@@ -9,6 +9,8 @@ import com.trdz.astro_days.model.server_pod.dto.ResponseDataPOD
 import org.koin.java.KoinJavaComponent
 import retrofit2.Response
 
+/** Получение данных с Api Picture of my Day
+ */
 class ServerRetrofitPOD: ExternalSource {
 
 	private val retrofit: ServerRetrofitPodApi by KoinJavaComponent.inject(ServerRetrofitPodApi::class.java)

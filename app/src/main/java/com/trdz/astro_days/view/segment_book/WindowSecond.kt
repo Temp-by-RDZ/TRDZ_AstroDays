@@ -12,6 +12,7 @@ class WindowSecond: Fragment() {
 	//region Elements
 	private var _binding: FragmentWindowSecondBinding? = null
 	private val binding get() = _binding!!
+
 	//endregion
 
 	//region Base realization
@@ -27,17 +28,18 @@ class WindowSecond: Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		buttonBinds()
 		initialize()
 	}
 
 	//endregion
 
 	//region Main functional
-	private fun buttonBinds() {
+	/** Задание начального исполнения основного функционала*/
+	private fun initialize() {
+		buttonBinds()
 	}
 
-	private fun initialize() {
+	private fun buttonBinds() {
 	}
 
 	//endregion

@@ -16,6 +16,7 @@ class WindowSearch: Fragment() {
 	//region Elements
 	private var _binding: DiologWikipediaBinding? = null
 	private val binding get() = _binding!!
+
 	//endregion
 
 	//region Base realization
@@ -31,12 +32,18 @@ class WindowSearch: Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		initialize()
 		buttonBinds()
 	}
 
 	//endregion
 
 	//region Main functional
+	/** Задание начального исполнения основного функционала*/
+	private fun initialize() {
+		buttonBinds()
+	}
+
 	private fun buttonBinds() {
 		binding.freeSpace.setOnClickListener {
 			hideKeyboard()

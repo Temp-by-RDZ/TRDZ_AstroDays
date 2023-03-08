@@ -17,7 +17,7 @@ class MainViewModel(
 	private val dataPomLive: SingleLiveData<StatusProcess> = SingleLiveData(),
 	private val dataPoeLive: SingleLiveData<StatusProcess> = SingleLiveData(),
 	private val messageLive: SingleLiveData<StatusMessage> = SingleLiveData(),
-	private val repository: RepositoryExecutor = RepositoryExecutor(),
+	private val repository: Repository = RepositoryExecutor(),
 ): ViewModel(), ServerResponse {
 
 	private var page: Int = 1

@@ -1,3 +1,10 @@
 package com.trdz.astro_days.model
 
-data class ServersResult(val code: Int, val name: String? = null, val description: String? = null, val url: String? = null, val type: String? = null)
+/** Ответ от Запроса в NASA EpicPicture,MarsRoverPicture,PictureOfTheDay */
+data class ServersResult(
+	val code: Int, 						//Код ответа на запрос
+	val name: String? = null, 			//Содержимое ответа: Заголовок о картинке
+	val description: String? = null, 	//Содержимое ответа: Описание картинки
+	val url: String? = null, 			//Содержимое ответа: Сама картинке
+	val type: String? = null			//Проверка на пришедший формат
+)

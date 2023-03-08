@@ -6,10 +6,10 @@ data class ResponseDataEPCItem(
 	val centroid_coordinates: CentroidCoordinates,
 	val coords: Coords,
 	val date: String,
-	val dscovr_j2000_position: DscovrJ2000PositionX,
+	val dscovr_j2000_position: DscovrJ2000Position,
 	val identifier: String,
 	val image: String,
-	val lunar_j2000_position: LunarJ2000PositionX,
-	val sun_j2000_position: SunJ2000PositionX,
+	val lunar_j2000_position: LunarJ2000Position,
+	val sun_j2000_position: SunJ2000Position,
 	val version: String
 )

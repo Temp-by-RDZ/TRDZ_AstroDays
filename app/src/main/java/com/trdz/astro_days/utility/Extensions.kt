@@ -9,14 +9,15 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.trdz.astro_days.R
 
-
-
+/** Перечень всех вспомогательных функций */
 
 //region SnackBar
 
@@ -102,7 +103,47 @@ fun Any.showToast(context: Context, text: String?, length: Int = Toast.LENGTH_SH
 }
 //endregion
 
-//region
+//region Animation
+fun FragmentTransaction.animate(effect: String) {
+	when (effect) {
+		EFFECT_RISE -> setCustomAnimations(
+			R.anim.slide_up,
+			R.anim.slide_down,
+		)
+		EFFECT_FADE -> setCustomAnimations(
+			R.anim.fade_in,
+			R.anim.fade_out,
+		)
+		EFFECT_SLIDE -> setCustomAnimations(
+			R.anim.slide_in,
+			R.anim.slide_out,
+		)
+		EFFECT_DROP -> setCustomAnimations(
+			R.anim.move_from_up,
+			R.anim.fade_out,
+		)
+		EFFECT_MOVED -> setCustomAnimations(
+			R.anim.move_from_up,
+			R.anim.slide_down,
+		)
+		EFFECT_MOVEL -> setCustomAnimations(
+			R.anim.slide_in,
+			R.anim.move_to_left,
+		)
+		EFFECT_MOVER -> setCustomAnimations(
+			R.anim.move_from_left,
+			R.anim.slide_out,
+		)
+		EFFECT_MOVEU -> setCustomAnimations(
+			R.anim.slide_up,
+			R.anim.move_to_up,
+		)
+	}
+}
+//endregion
+
+//region Bottom Navigation
+
 fun BottomNavigationView.getSelectedItem(): Int {
 	val menu: Menu = this.menu
 	for (i in 0 until this.menu.size()) {
@@ -111,3 +152,4 @@ fun BottomNavigationView.getSelectedItem(): Int {
 	}
 	return 0
 }
+//endregion

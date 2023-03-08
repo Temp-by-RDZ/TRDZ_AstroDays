@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.trdz.astro_days.R
 import com.trdz.astro_days.view_model.MainViewModel
+import androidx.fragment.app.viewModels
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.trdz.astro_days.databinding.FragmentNavigationBinding
@@ -23,33 +24,36 @@ import com.trdz.astro_days.utility.PREFIX_MRP
 import com.trdz.astro_days.utility.PREFIX_POD
 import com.trdz.astro_days.utility.*
 import com.trdz.astro_days.view.Navigation
+import com.trdz.astro_days.view_model.ViewModelFactories
 import kotlinx.android.synthetic.main.preset_chips.*
 import org.koin.android.ext.android.inject
 
 class FragmentNavigation: Fragment() {
 
 	//region Injected
-
 	private val navigation: Navigation by inject()
+	private val factory: ViewModelFactories by inject()
+
+	private val viewModel: MainViewModel by viewModels {
+		factory
+	}
 
 	//endregion
 
 	//region Elements
 	private var _binding: FragmentNavigationBinding? = null
 	private val binding get() = _binding!!
-	private var _viewModel: MainViewModel? = null
-	private val viewModel get() = _viewModel!!
 	private var mood = 1
 	private var lastChose = 1
 	var isMain = true
 	var isFirst = false
+
 	//endregion
 
 	//region Base realization
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
-		_viewModel = null
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +65,6 @@ class FragmentNavigation: Fragment() {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		_binding = FragmentNavigationBinding.inflate(inflater, container, false)
-		_viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 		return binding.root
 	}
 
@@ -181,7 +184,6 @@ class FragmentNavigation: Fragment() {
 		navigation.add(requireActivity().supportFragmentManager, WindowHelp(), true, R.id.container_fragment_navigation)
 	}
 	//endregion
-
 
 	//region Main functional
 
