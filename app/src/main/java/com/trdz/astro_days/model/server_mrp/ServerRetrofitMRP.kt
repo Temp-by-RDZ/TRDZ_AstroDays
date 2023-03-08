@@ -6,12 +6,15 @@ import com.trdz.astro_days.MyApp
 import com.trdz.astro_days.model.ExternalSource
 import com.trdz.astro_days.model.ServersResult
 import com.trdz.astro_days.model.server_mrp.dto.ResponseDataMRP
+import com.trdz.astro_days.model.server_pod.ServerRetrofitPodApi
+import org.koin.java.KoinJavaComponent
 import retrofit2.Response
 
 class ServerRetrofitMRP: ExternalSource {
 
+	private val retrofit: ServerRetrofitMrpCustomApi by KoinJavaComponent.inject(ServerRetrofitMrpCustomApi::class.java)
+
 	override fun load(date: String?): ServersResult {
-		val retrofit = MyApp.getRetrofitMrp()
 
 		return try {
 			val response = retrofit.getResponse(date!!,BuildConfig.NASA_API_KEY).execute()

@@ -1,6 +1,7 @@
 package com.trdz.astro_days.di
 
 import com.google.gson.GsonBuilder
+import com.trdz.astro_days.model.server_mrp.ServerRetrofitMrpCustomApi
 import com.trdz.astro_days.model.server_pod.ServerRetrofitPodApi
 import com.trdz.astro_days.model.server_pod.ServerRetrofitPodCustomApi
 import com.trdz.astro_days.utility.DOMAIN
@@ -23,6 +24,14 @@ val moduleDataK = module {
 			addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
 		}.build().create(ServerRetrofitPodCustomApi::class.java)
 	}
+
+	single<ServerRetrofitMrpCustomApi>() {
+		Retrofit.Builder().apply {
+			baseUrl(DOMAIN)
+			addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+		}.build().create(ServerRetrofitMrpCustomApi::class.java)
+	}
+
 }
 
 

@@ -32,7 +32,6 @@ class ServerReceiverEPC(): ExternalSource {
 		val urlConnection: HttpsURLConnection = (uri.openConnection() as HttpsURLConnection).apply {
 			connectTimeout = 1000
 			readTimeout = 1000
-		//addRequestProperty(API_KEY, BuildConfig.WEATHER_API_KEY)
 		}
 
 		try { responseCode = urlConnection.responseCode }

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.trdz.astro_days.R
-import com.trdz.astro_days.view.Leader
 import com.trdz.astro_days.view.MainActivity
 import com.trdz.astro_days.view_model.MainViewModel
 import com.trdz.astro_days.view_model.StatusProcess
@@ -28,6 +27,8 @@ import com.trdz.astro_days.utility.KEY_PREFIX
 import com.trdz.astro_days.utility.PREFIX_EPC
 import com.trdz.astro_days.utility.PREFIX_MRP
 import com.trdz.astro_days.utility.PREFIX_POD
+import com.trdz.astro_days.view.Navigation
+import org.koin.android.ext.android.inject
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
@@ -35,9 +36,13 @@ import java.net.URL
 
 class WindowPictureOf: Fragment() {
 
+	//region Injected
+
+	private val navigation: Navigation by inject()
+
+	//endregion
+
 	//region Elements
-	private var _executors: Leader? = null
-	private val executors get() = _executors!!
 	private var _binding: FragmentWindowPofBinding? = null
 	private val binding get() = _binding!!
 	private var _viewModel: MainViewModel? = null
@@ -52,7 +57,6 @@ class WindowPictureOf: Fragment() {
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
-		_executors = null
 		_viewModel = null
 	}
 
@@ -65,7 +69,6 @@ class WindowPictureOf: Fragment() {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		_binding = FragmentWindowPofBinding.inflate(inflater, container, false)
-		_executors = (requireActivity() as MainActivity)
 		_viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 		return binding.root
 	}
@@ -174,7 +177,7 @@ class WindowPictureOf: Fragment() {
 				Log.d("@@@", "App - $prefix show")
 			}
 			is StatusProcess.Saving -> thread {
-				executors.getNavigation().add(requireActivity().supportFragmentManager, SceneFlash(),false,R.id.container_fragment_primal)
+				navigation.add(requireActivity().supportFragmentManager, SceneFlash(),false,R.id.container_fragment_primal)
 				galleryPic(material.data) }
 		}
 	}

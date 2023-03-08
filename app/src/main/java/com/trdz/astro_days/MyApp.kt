@@ -27,32 +27,7 @@ class MyApp: Application() {
 	}
 
 	companion object {
-		private var retrofitPod: ServerRetrofitPodApi? = null
-		private var retrofitPodCustom: ServerRetrofitPodCustomApi? = null
 		private var retrofitMrp: ServerRetrofitMrpCustomApi? = null
-
-		private fun createRetrofit() {
-			retrofitPod = Retrofit.Builder().apply {
-				baseUrl(DOMAIN)
-				addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-			}.build().create(ServerRetrofitPodApi::class.java)
-		}
-
-		fun getRetrofit(): ServerRetrofitPodApi {
-			if (retrofitPod == null) createRetrofit()
-			return retrofitPod!!
-		}
-		private fun createRetrofitCustom() {
-			retrofitPodCustom = Retrofit.Builder().apply {
-				baseUrl(DOMAIN)
-				addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-			}.build().create(ServerRetrofitPodCustomApi::class.java)
-		}
-
-		fun getRetrofitCustom(): ServerRetrofitPodCustomApi {
-			if (retrofitPodCustom == null) createRetrofitCustom()
-			return retrofitPodCustom!!
-		}
 
 		private fun createRetrofitMrp() {
 			retrofitMrp = Retrofit.Builder().apply {

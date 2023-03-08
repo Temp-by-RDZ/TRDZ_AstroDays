@@ -15,6 +15,8 @@ class Navigation(private var fastContainer: Int = 0) {
 	}
 
 	fun add(manager: FragmentManager, fragment: Fragment?, remember: Boolean = true, container: Int = fastContainer, effect: String = "NONE") {
+		val pos = if (container == -1) fastContainer
+		else container
 		if (manager.isDestroyed) return
 		manager.beginTransaction().apply {
 			when (effect) {
@@ -51,13 +53,15 @@ class Navigation(private var fastContainer: Int = 0) {
 					R.anim.move_to_up,
 				)
 			}
-			add(container, fragment!!)
+			add(pos, fragment!!)
 			if (remember) addToBackStack("")
 			commit()
 		}
 	}
 
 	fun replace(manager: FragmentManager, fragment: Fragment?, remember: Boolean = true, container: Int = fastContainer, effect: String = "NONE") {
+		val pos = if (container == -1) fastContainer
+		else container
 		if (manager.isDestroyed) return
 		manager.beginTransaction().apply {
 			when (effect) {
@@ -98,7 +102,7 @@ class Navigation(private var fastContainer: Int = 0) {
 					R.anim.move_to_up,
 				)
 			}
-			replace(container, fragment!!)
+			replace(pos, fragment!!)
 			setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 			if (remember) addToBackStack("")
 			commit()

@@ -2,6 +2,8 @@ package com.trdz.astro_days.utility
 
 import android.app.Activity
 import android.content.Context
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -11,6 +13,10 @@ import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
+
+
 
 //region SnackBar
 
@@ -82,6 +88,7 @@ fun ImageView.loadSvg(url: String) {
 }
 //endregion
 
+//region Toasts
 private var toast: Toast? = null
 
 fun Any.stopToast() {
@@ -92,4 +99,15 @@ fun Any.showToast(context: Context, text: String?, length: Int = Toast.LENGTH_SH
 	toast?.cancel()
 	toast = Toast.makeText(context, text, length)
 	toast?.show()
+}
+//endregion
+
+//region
+fun BottomNavigationView.getSelectedItem(): Int {
+	val menu: Menu = this.menu
+	for (i in 0 until this.menu.size()) {
+		val menuItem: MenuItem = menu.getItem(i)
+		if (menuItem.isChecked) return menuItem.itemId
+	}
+	return 0
 }

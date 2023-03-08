@@ -16,20 +16,25 @@ import com.trdz.astro_days.databinding.FragmentNavigationBinding
 import com.trdz.astro_days.view_model.StatusMessage
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.google.android.material.chip.Chip
-import com.trdz.astro_days.view.Leader
 import com.trdz.astro_days.view.MainActivity
 import com.trdz.astro_days.utility.KEY_FINSTANCE
 import com.trdz.astro_days.utility.PREFIX_EPC
 import com.trdz.astro_days.utility.PREFIX_MRP
 import com.trdz.astro_days.utility.PREFIX_POD
 import com.trdz.astro_days.utility.*
+import com.trdz.astro_days.view.Navigation
 import kotlinx.android.synthetic.main.preset_chips.*
+import org.koin.android.ext.android.inject
 
 class FragmentNavigation: Fragment() {
 
+	//region Injected
+
+	private val navigation: Navigation by inject()
+
+	//endregion
+
 	//region Elements
-	private var _executors: Leader? = null
-	private val executors get() = _executors!!
 	private var _binding: FragmentNavigationBinding? = null
 	private val binding get() = _binding!!
 	private var _viewModel: MainViewModel? = null
@@ -44,7 +49,6 @@ class FragmentNavigation: Fragment() {
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
-		_executors = null
 		_viewModel = null
 	}
 
@@ -57,7 +61,6 @@ class FragmentNavigation: Fragment() {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		_binding = FragmentNavigationBinding.inflate(inflater, container, false)
-		_executors = (requireActivity() as MainActivity)
 		_viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 		return binding.root
 	}
@@ -133,7 +136,7 @@ class FragmentNavigation: Fragment() {
 						}
 						override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float) {}
 						override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
-							executors.getNavigation().replace(requireActivity().supportFragmentManager, com.trdz.astro_days.view.segment_book.FragmentNavigation(), false, R.id.container_fragment_navigation)
+							navigation.replace(requireActivity().supportFragmentManager, com.trdz.astro_days.view.segment_book.FragmentNavigation(), false, R.id.container_fragment_navigation)
 						}
 						override fun onTransitionTrigger(motionLayout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) {
 						}
@@ -145,7 +148,7 @@ class FragmentNavigation: Fragment() {
 				}
 				R.id.app_bar_settings -> {
 					toSetting()
-					executors.getNavigation().replace(requireActivity().supportFragmentManager, WindowSettings(), true)
+					navigation.replace(requireActivity().supportFragmentManager, WindowSettings(), true)
 				}
 			}
 		}
@@ -175,7 +178,7 @@ class FragmentNavigation: Fragment() {
 
 	private fun openHelp() {
 		toSetting()
-		executors.getNavigation().add(requireActivity().supportFragmentManager, WindowHelp(), true, R.id.container_fragment_navigation)
+		navigation.add(requireActivity().supportFragmentManager, WindowHelp(), true, R.id.container_fragment_navigation)
 	}
 	//endregion
 
@@ -187,7 +190,7 @@ class FragmentNavigation: Fragment() {
 		with(binding) {
 			favorite.setOnClickListener { viewModel.needSave(getPrefix()) }
 			floatButton.setOnLongClickListener { changeMode() }
-			floatButton.setOnClickListener { executors.getNavigation().add(requireActivity().supportFragmentManager, WindowSearch(), true, R.id.container_fragment_navigation) }
+			floatButton.setOnClickListener { navigation.add(requireActivity().supportFragmentManager, WindowSearch(), true, R.id.container_fragment_navigation) }
 			presetChip.chipGroup.setOnCheckedChangeListener { _, position -> chipRealization(position) }
 		}
 	}
@@ -218,7 +221,7 @@ class FragmentNavigation: Fragment() {
 				viewModel.setChange = 0
 				refreshAll()
 			}
-			"chip_r" -> executors.getExecutor().showToast(requireContext(), getString(R.string.egs))
+			"chip_r" -> showToast(requireContext(), getString(R.string.egs))
 		}
 	}
 

@@ -10,7 +10,6 @@ import com.google.android.material.tabs.TabLayout
 import com.trdz.astro_days.R
 import com.trdz.astro_days.databinding.FragmentWindowSettingsBinding
 import com.trdz.astro_days.view.CustomOnBackPressed
-import com.trdz.astro_days.view.Leader
 import com.trdz.astro_days.view.MainActivity
 import com.trdz.astro_days.view_model.MainViewModel
 import com.trdz.astro_days.utility.KEY_OPTIONS
@@ -19,8 +18,6 @@ import com.trdz.astro_days.utility.KEY_TSET
 
 class WindowSettings : Fragment(), CustomOnBackPressed {
 
-    private var _executors: Leader? = null
-    private val executors get() = _executors!!
     private var _binding: FragmentWindowSettingsBinding? = null
     private val binding get() = _binding!!
     private var _viewModel: MainViewModel? = null
@@ -43,7 +40,6 @@ class WindowSettings : Fragment(), CustomOnBackPressed {
         val localInflater = inflater.cloneInContext(ContextThemeWrapper(activity, getRealStylesID(themeID)))
         _binding = FragmentWindowSettingsBinding.inflate(localInflater)
         _viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-        _executors = (requireActivity() as MainActivity)
         return binding.root
     }
 

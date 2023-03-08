@@ -8,27 +8,34 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.trdz.astro_days.R
 import com.trdz.astro_days.databinding.FragmentNavigationGlobalBinding
+import com.trdz.astro_days.utility.EFFECT_MOVED
+import com.trdz.astro_days.utility.EFFECT_MOVEL
+import com.trdz.astro_days.utility.EFFECT_MOVER
+import com.trdz.astro_days.utility.getSelectedItem
 import com.trdz.astro_days.view.CustomOnBackPressed
 import com.trdz.astro_days.view_model.MainViewModel
-import com.trdz.astro_days.view.Leader
-import com.trdz.astro_days.view.MainActivity
+import com.trdz.astro_days.view.Navigation
+import org.koin.android.ext.android.inject
 
 class FragmentNavigation: Fragment(), CustomOnBackPressed {
 
+	//region Injected
+	private val navigation: Navigation by inject()
+
+	//endregion
+
 	//region Elements
-	private var _executors: Leader? = null
-	private val executors get() = _executors!!
 	private var _binding: FragmentNavigationGlobalBinding? = null
 	private val binding get() = _binding!!
 	private var _viewModel: MainViewModel? = null
 	private val viewModel get() = _viewModel!!
+
 	//endregion
 
 	//region Base realization
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
-		_executors = null
 		_viewModel = null
 	}
 
@@ -37,8 +44,7 @@ class FragmentNavigation: Fragment(), CustomOnBackPressed {
 			override fun onAnimationEnd(animation: Animator?) {
 				super.onAnimationEnd(animation)
 				for (fragment in requireActivity().supportFragmentManager.fragments) requireActivity().supportFragmentManager.beginTransaction().remove(fragment).commit()
-				executors.getNavigation().replace(requireActivity().supportFragmentManager, com.trdz.astro_days.view.segment_picture.FragmentNavigation(), false, R.id.container_fragment_navigation)
-
+				navigation.replace(requireActivity().supportFragmentManager, com.trdz.astro_days.view.segment_picture.FragmentNavigation(), false, R.id.container_fragment_navigation)
 			}
 		})
 		return true
@@ -46,7 +52,6 @@ class FragmentNavigation: Fragment(), CustomOnBackPressed {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		_binding = FragmentNavigationGlobalBinding.inflate(inflater, container, false)
-		_executors = (requireActivity() as MainActivity)
 		_viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 		return binding.root
 	}
@@ -56,23 +61,27 @@ class FragmentNavigation: Fragment(), CustomOnBackPressed {
 		buttonBinds()
 		initialization()
 	}
-	//endregion
 
-	//region Menu realization
 	//endregion
 
 	//region Main functional
 	private fun initialization() {
 		binding.bottomNavigation.setOnItemSelectedListener { item ->
-			when (item.itemId) {
-				R.id.action_bottom_navigation_picture -> {
-					executors.getNavigation().replace(requireActivity().supportFragmentManager, WindowPicture(), false)
-				}
-				R.id.action_bottom_navigation_note -> {
-					executors.getNavigation().replace(requireActivity().supportFragmentManager, WindowNoteList(), false)
-				}
-				R.id.action_bottom_navigation_knowledge -> {
-					executors.getNavigation().replace(requireActivity().supportFragmentManager, WindowKnowledgeList(), false)
+			if (!item.isChecked) {
+				when (item.itemId) {
+					R.id.action_bottom_navigation_picture -> {
+						navigation.replace(requireActivity().supportFragmentManager, WindowPicture(), false, -1, EFFECT_MOVER)
+					}
+					R.id.action_bottom_navigation_note -> {
+						when (binding.bottomNavigation.getSelectedItem()) {
+							R.id.action_bottom_navigation_knowledge -> navigation.replace(requireActivity().supportFragmentManager, WindowSecond(), false, -1, EFFECT_MOVER)
+							R.id.action_bottom_navigation_picture -> navigation.replace(requireActivity().supportFragmentManager, WindowSecond(), false, -1, EFFECT_MOVEL)
+							else -> navigation.replace(requireActivity().supportFragmentManager, WindowSecond(), false, -1, EFFECT_MOVED)
+						}
+					}
+					R.id.action_bottom_navigation_knowledge -> {
+						navigation.replace(requireActivity().supportFragmentManager, WindowThird(), false, -1, EFFECT_MOVEL)
+					}
 				}
 			}
 			true

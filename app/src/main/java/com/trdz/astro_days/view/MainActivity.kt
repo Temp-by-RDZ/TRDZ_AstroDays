@@ -7,12 +7,15 @@ import android.util.Log
 import com.trdz.astro_days.R
 import com.trdz.astro_days.utility.KEY_OPTIONS
 import com.trdz.astro_days.utility.KEY_THEME
+import com.trdz.astro_days.utility.stopToast
+import org.koin.android.ext.android.inject
 
-class MainActivity: AppCompatActivity(), Leader {
+class MainActivity: AppCompatActivity() {
 
-	//region Elements
-	private val navigation = Navigation(R.id.container_fragment_base)
-	private val executor = Executor()
+
+	//region Injected
+
+	private val navigation: Navigation by inject()
 
 	//endregion
 
@@ -36,10 +39,9 @@ class MainActivity: AppCompatActivity(), Leader {
 
 	//endregion
 
-
 	//region Base realization
 	override fun onDestroy() {
-		executor.stop()
+		stopToast()
 		super.onDestroy()
 	}
 
@@ -49,7 +51,6 @@ class MainActivity: AppCompatActivity(), Leader {
 		setContentView(R.layout.activity_main)
 		if (savedInstanceState == null) {
 			Log.d("@@@", "Start program")
-			//navigation.add(supportFragmentManager, FragmentNavigation.newInstance(true), false, R.id.container_fragment_navigation)
 			navigation.add(supportFragmentManager, WindowStart(), false, R.id.container_fragment_primal)
 		}
 	}
@@ -63,8 +64,5 @@ class MainActivity: AppCompatActivity(), Leader {
 	}
 
 	//endregion
-
-	override fun getNavigation() = navigation
-	override fun getExecutor() = executor
 
 }
