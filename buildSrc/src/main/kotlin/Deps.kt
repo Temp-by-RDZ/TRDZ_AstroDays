@@ -6,7 +6,9 @@ object Deps {
 	const val IMAGE_GLIDE = "com.github.bumptech.glide:glide:4.11.0"    // Image - Glide
 	const val IMAGE_COIL = "io.coil-kt:coil:1.4.0"                     // Image - Coil
 	const val IMAGE_SVG = "io.coil-kt:coil-svg:1.3.2"                 // Image - Coil svg
-	//Coroutines
+	//Threader
+	const val RXJAVA_CORE = "io.reactivex.rxjava3:rxjava:3.0.0"
+	const val RXJAVA_ANDROID = "io.reactivex.rxjava3:rxandroid:3.0.0"
 	const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
 	const val COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
 	//Data Room

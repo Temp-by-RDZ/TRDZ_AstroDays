@@ -8,10 +8,11 @@ import com.trdz.astro_days.model.server_pod.ServerRetrofitPOD
 import com.trdz.astro_days.utility.PREFIX_EPC
 import com.trdz.astro_days.utility.PREFIX_MRP
 import com.trdz.astro_days.utility.PREFIX_POD
+import io.reactivex.rxjava3.core.Single
 
 class RepositoryExecutor: Repository {
 	/** Отправка запроса NASA EpicPicture,MarsRoverPicture,PictureOfTheDay */
-	override fun connection(serverListener: ServerResponse, prefix: String, date: String?) {
+	override fun connection(prefix: String, date: String?): Single<RequestResult> {
 		Log.d("@@@", "Rep - start connection $prefix on date: $date")
 		lateinit var externalSource: ExternalSource
 		when (prefix) {
@@ -19,11 +20,10 @@ class RepositoryExecutor: Repository {
 			PREFIX_MRP -> externalSource = ServerRetrofitMRP()
 			PREFIX_EPC -> externalSource = ServerReceiverEPC()
 		}
-		Thread {
-			val result = externalSource.load(date)
-			if (result.code in 200..299 ) serverListener.success(prefix,result)
-			else serverListener.fail(prefix, result.code)
-		}.start()
+		return Single.create{
+			val data = externalSource.load(date).copy(prefix = prefix)
+			it.onSuccess(data)
+		}
 	}
 
 }

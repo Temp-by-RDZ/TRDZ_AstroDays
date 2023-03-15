@@ -70,9 +70,12 @@ class FragmentNavigation: Fragment(), CustomOnBackPressed {
 			if (!item.isChecked) {
 				when (item.itemId) {
 					R.id.action_bottom_navigation_picture -> {
+						// Это переход в отдельное окно с частью переделаного старого проекта
+						// Там идут запросами по ежедневным картинкам с описанием и возможностью прогуглить по ним информацию
 						navigation.replace(requireActivity().supportFragmentManager, WindowPicture(), false, -1, EFFECT_MOVER)
 					}
 					R.id.action_bottom_navigation_note -> {
+						// Тут разпланирован Дневник записей с прифязкой картинок и фото?(последнее под вопросом)
 						when (binding.bottomNavigation.getSelectedItem()) {
 							R.id.action_bottom_navigation_knowledge -> navigation.replace(requireActivity().supportFragmentManager, WindowSecond(), false, -1, EFFECT_MOVER)
 							R.id.action_bottom_navigation_picture -> navigation.replace(requireActivity().supportFragmentManager, WindowSecond(), false, -1, EFFECT_MOVEL)
@@ -80,6 +83,7 @@ class FragmentNavigation: Fragment(), CustomOnBackPressed {
 						}
 					}
 					R.id.action_bottom_navigation_knowledge -> {
+						// Тут разпланировано взимодействие с Astronomy API
 						navigation.replace(requireActivity().supportFragmentManager, WindowThird(), false, -1, EFFECT_MOVEL)
 					}
 				}

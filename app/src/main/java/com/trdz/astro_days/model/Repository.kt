@@ -1,8 +1,8 @@
 package com.trdz.astro_days.model
 
-import com.trdz.astro_days.view_model.ServerResponse
+import io.reactivex.rxjava3.core.Single
 
 /** Интерфейс для основного репозитория */
 interface Repository {
-	fun connection(serverListener: ServerResponse, prefix: String, date: String?)
+	fun connection(prefix: String, date: String?) : Single<RequestResult>
 }
