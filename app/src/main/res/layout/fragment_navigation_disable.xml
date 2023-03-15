@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motion_picture"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/layout_description">
+
+    <Space
+        android:id="@+id/setup_line"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintBottom_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/app_bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintBottom_toTopOf="@+id/setup_line">
+
+        <include
+            android:id="@+id/preset_appbar"
+            layout="@layout/preset_appbar" />
+
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        app:visibilityMode="ignore"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/preset_chip"
+        layout="@layout/preset_chips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/motion_picture" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main_zone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:scaleY="1.4"
+        tools:background="@color/black"
+        tools:layout_editor_absoluteY="56dp">
+
+        <View
+            android:id="@+id/bottom_sub_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hgn_bottom_block_h"
+            android:layout_gravity="bottom"
+            android:background="@color/background" />
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/low_bottom_block_h"
+            android:layout_gravity="bottom"
+            app:backgroundTint="?colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:fabAlignmentMode="center" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/float_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorOnPrimary"
+            app:borderWidth="@dimen/float_button_border"
+            app:layout_anchor="@id/bottom_app_bar"
+            app:srcCompat="@drawable/ic_wikipedia"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fake_button_margin"
+            android:background="@drawable/ic_favourite"
+            app:layout_anchor="@id/bottom_app_bar"
+            app:layout_anchorGravity="left|center" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
