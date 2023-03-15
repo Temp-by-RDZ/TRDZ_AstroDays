@@ -67,6 +67,9 @@ android {
 		implementation(Deps.KOIN_CORE)
 		implementation(Deps.KOIN_ANDROID)   //Koin Features (Scope,ViewModel...)
 		implementation(Deps.KOIN_COMPAT)    //Koin Java Compatibility
+		//Threader
+		implementation(Deps.RXJAVA_CORE)
+		implementation(Deps.RXJAVA_ANDROID)
 		//Data Server
 		implementation(Deps.RETROFIT_CORE)  //Functional Requests
 		implementation(Deps.RETROFIT_CONV)  //Functional Requests Converter

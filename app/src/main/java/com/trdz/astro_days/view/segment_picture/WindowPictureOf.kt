@@ -85,13 +85,20 @@ class WindowPictureOf: Fragment() {
 			PREFIX_MRP -> viewModel.getPomData().observe(viewLifecycleOwner, observer)
 			PREFIX_EPC -> viewModel.getPoeData().observe(viewLifecycleOwner, observer)
 		}
-		buttonBinds()
 		initialize()
 	}
 
 	//endregion
 
 	//region Main functional
+
+	/** Задание начального исполнения основного функционала*/
+	private fun initialize() {
+		buttonBinds()
+		viewModel.initialize(prefix)
+	}
+
+	/** Настройка кнопок и взаимодействия с вспывающем окном*/
 	private fun buttonBinds() {
 		with(binding) {
 			_bottomSheetBehavior = BottomSheetBehavior.from(popupSheet.bottomSheetContainer)
@@ -124,10 +131,7 @@ class WindowPictureOf: Fragment() {
 		}
 	}
 
-	private fun initialize() {
-		viewModel.initialize(prefix)
-	}
-
+	/** Отображение данных полученных от VM */
 	private fun renderData(material: StatusProcess) {
 		when (material) {
 			StatusProcess.Load -> {
@@ -187,6 +191,7 @@ class WindowPictureOf: Fragment() {
 		}
 	}
 
+	/** Сохранение картинки с окна на диск */
 	private fun galleryPic(data: String) {
 		Log.d("@@@", "App - Start saving image")
 		val file = getDisc()

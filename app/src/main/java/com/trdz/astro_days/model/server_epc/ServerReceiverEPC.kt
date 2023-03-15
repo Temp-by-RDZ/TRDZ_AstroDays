@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.trdz.astro_days.BuildConfig
 import com.trdz.astro_days.model.ExternalSource
-import com.trdz.astro_days.model.ServersResult
+import com.trdz.astro_days.model.RequestResult
 import com.trdz.astro_days.model.server_epc.dto.ResponseDataEPC
 import com.trdz.astro_days.utility.DOMAIN
 import com.trdz.astro_days.utility.PACKAGE_EPA
@@ -19,7 +19,7 @@ import kotlin.text.StringBuilder
 /** Получение данных с Api Earth Pictures */
 class ServerReceiverEPC(): ExternalSource {
 
-	override fun load(date: String?): ServersResult {
+	override fun load(date: String?): RequestResult {
 		var responseCode = -1
 
 		val uri = URL(StringBuilder("").apply {
@@ -38,7 +38,7 @@ class ServerReceiverEPC(): ExternalSource {
 		try { responseCode = urlConnection.responseCode }
 		catch (Ignored: Exception) {
 			Log.d("@@@", "Ser- Connection Error")
-			return ServersResult(responseCode)
+			return RequestResult(responseCode)
 		}
 
 		try {
@@ -46,7 +46,7 @@ class ServerReceiverEPC(): ExternalSource {
 
 				val buffer = BufferedReader(InputStreamReader(urlConnection.inputStream))
 				val responseData: ResponseDataEPC = Gson().fromJson(buffer, ResponseDataEPC::class.java)
-				if (responseData.isEmpty()) return ServersResult(-2)
+				if (responseData.isEmpty()) return RequestResult(-2)
 				val result = responseData.random()
 				val imageEPA = StringBuilder().apply {
 					append(DOMAIN)
@@ -57,16 +57,16 @@ class ServerReceiverEPC(): ExternalSource {
 					append(".png?api_key=")
 					append(BuildConfig.NASA_API_KEY)
 				}
-				return ServersResult(responseCode, "Earth"+result.centroid_coordinates,result.caption, imageEPA.toString(),"EPA_Image")
+				return RequestResult(responseCode, "Earth"+result.centroid_coordinates,result.caption, imageEPA.toString(),"EPA_Image")
 			}
 		}
 		catch (Ignored: JsonSyntaxException) {
-			return ServersResult(responseCode)
+			return RequestResult(responseCode)
 		}
 		finally {
 			urlConnection.disconnect()
 		}
-		return ServersResult(responseCode)
+		return RequestResult(responseCode)
 
 	}
 }
